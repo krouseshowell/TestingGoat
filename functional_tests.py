@@ -10,6 +10,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         #There is a site, go to it!
         self.browser.get('http://localhost:8000')
@@ -32,24 +37,20 @@ class NewVisitorTest(unittest.TestCase):
         #when she hits enter, the page updates and the page lists:
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
 #The item on the to-do lists
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
-        #there is still a text book
+        #there is still a text box
         #enters another item.
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
         #page updates and shows both items
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
-        self.assertIn(
-            '2: Use peacock feathers to make a fly',
-            [row.text for row in rows]
-        )
+        self.check_for_row_in_list_table('1: Buy peackock feathers')
+        self.check_for_row_in_list_table('2: Use peackock feathers to make a fly')
+        
         #page updates and shows both items
         self.fail('Finish the test!')
 #the site has generated a unique url and there is explanitory test
