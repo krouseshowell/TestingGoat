@@ -29,3 +29,9 @@ See /usr/include/servers/bootstrap_defs.h for the error codes.
 1499736835276	Marionette	DEBUG	Received DOM event "DOMContentLoaded" for "http://localhost:8000/"
 1499736835306	Marionette	DEBUG	Received DOM event "pageshow" for "http://localhost:8000/"
 1499736835381	Marionette	INFO	New connections will no longer be accepted
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
